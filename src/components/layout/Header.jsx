@@ -86,7 +86,7 @@ const Header = () => {
                 )}
               </div>
               <div className="hidden md:block text-left">
-                <p className="text-sm font-medium">{user?.name || "User"}</p>
+                <p className="text-sm font-medium">{user?.fullName || "User"}</p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   {user?.role || "Admin"}
                 </p>
@@ -100,7 +100,7 @@ const Header = () => {
                   <p className="text-sm font-medium text-gray-900 dark:text-white">
                     {user?.name}
                   </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="truncate text-sm text-gray-500 dark:text-gray-400">
                     {user?.email}
                   </p>
                 </div>
