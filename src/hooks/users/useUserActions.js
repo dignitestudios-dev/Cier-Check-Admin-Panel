@@ -19,8 +19,8 @@ const useUserActions = (role, isActive, search, page, limit) => {
 
       const data = response.data || [];
       const meta = response.pagination || {};
-
-      setUsers(data);
+      const filteredData = data.filter((user) => user.role !== "admin");
+      setUsers(filteredData);
 
       // Compute stats from result
       const totalUsers = meta.total ?? data.length;
