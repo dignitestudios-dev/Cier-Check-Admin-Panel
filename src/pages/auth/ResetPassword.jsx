@@ -134,7 +134,7 @@ const ResetPassword = () => {
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <Input
               label="New Password"
-              type={showPassword ? "text" : "password"}
+              type={!showPassword ? "text" : "password"}
               autoComplete="new-password"
               {...register("password", {
                 required: "Password is required",
@@ -159,7 +159,7 @@ const ResetPassword = () => {
 
             <Input
               label="Confirm New Password"
-              type={showConfirmPassword ? "text" : "password"}
+              type={!showConfirmPassword ? "text" : "password"}
               autoComplete="new-password"
               {...register("confirmPassword", {
                 required: "Please confirm your password",

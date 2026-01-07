@@ -124,7 +124,7 @@ const ChangePassword = () => {
             {/* New Password */}
             <Input
               label="New Password"
-              type={showNewPassword ? "text" : "password"}
+              type={!showNewPassword ? "text" : "password"}
               autoComplete="new-password"
               {...register("newPassword", {
                 required: "New password is required",
@@ -150,7 +150,7 @@ const ChangePassword = () => {
             {/* Confirm New Password */}
             <Input
               label="Confirm New Password"
-              type={showConfirmPassword ? "text" : "password"}
+              type={!showConfirmPassword ? "text" : "password"}
               autoComplete="new-password"
               {...register("confirmPassword", {
                 required: "Please confirm your new password",

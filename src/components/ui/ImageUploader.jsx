@@ -35,14 +35,25 @@ const ImageUploader = ({
 
     if (validFiles.length === 0) return;
 
-    const newPreviews = validFiles.map((file) => ({ url: URL.createObjectURL(file), isExisting: false }));
+    const currentCount = previews.length;
+    const maxAllowed = multiple ? 10 : 1;
+    const remaining = maxAllowed - currentCount;
+
+    if (remaining <= 0) return;
+
+    const filesToAdd = validFiles.slice(0, remaining);
+
+    const newPreviews = filesToAdd.map((file) => ({
+      url: URL.createObjectURL(file),
+      isExisting: false,
+    }));
     setPreviews(multiple ? [...previews, ...newPreviews] : newPreviews);
 
     if (onChange) {
       // Ensure we always emit a flat array. The incoming `value` prop may
       // itself be nested; flatten it first.
       const current = Array.isArray(value) ? value.flat(Infinity) : [];
-      const next = multiple ? [...current, ...validFiles] : validFiles;
+      const next = multiple ? [...current, ...filesToAdd] : filesToAdd;
       onChange(next);
     }
   };
@@ -91,7 +102,7 @@ const ImageUploader = ({
           </div>
         ))}
 
-        {allowUpload && (
+        {allowUpload && previews.length < 10 && (
           <label className="w-24 h-24 border border-dashed border-gray-300 dark:border-gray-600 rounded-md flex items-center justify-center cursor-pointer">
             {multiple ? (
               <Plus className="w-6 h-6 text-gray-400" />
@@ -102,7 +113,7 @@ const ImageUploader = ({
             )}
             <input
               type="file"
-              accept="image/*"
+              accept="image/jpg, image/jpeg, image/png"
               multiple={multiple}
               className="hidden"
               onChange={handleFileChange}

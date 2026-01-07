@@ -70,6 +70,7 @@ const Products = () => {
     {
       key: "category",
       label: "Category",
+      render: (value) => <p className="truncate w-56">{value ? value : "- - -"}</p>,
     },
     {
       key: "price",
@@ -285,6 +286,7 @@ const Products = () => {
                   {...register("name", {
                     required: "Product name is required",
                   })}
+                  maxLength={30}
                   disabled={loadingCreateProduct}
                   error={errors.name?.message}
                 />
@@ -293,6 +295,7 @@ const Products = () => {
               <Input
                 label="Category"
                 {...register("category")}
+                maxLength={30}
                 disabled={loadingCreateProduct}
                 error={errors.category?.message}
               />
@@ -301,10 +304,9 @@ const Products = () => {
                 label="Price"
                 type="number"
                 step="0.01"
-                min="0"
                 {...register("price", {
                   required: "Price is required",
-                  min: { value: 0, message: "Price must be positive" },
+                  min: { value: 0.01, message: "Price must be greater than 0" },
                 })}
                 disabled={loadingCreateProduct}
                 error={errors.price?.message}
@@ -317,6 +319,7 @@ const Products = () => {
                 required: "Product description is required",
               })}
               rows={4}
+              maxLength={310}
               placeholder="Enter product description"
               error={errors.description?.message}
               disabled={loadingCreateProduct}
@@ -331,7 +334,14 @@ const Products = () => {
                 <ImageUploader
                   onChange={(files) => onChange(files)}
                   value={value}
-                  label="Product Images"
+                  label={
+                    <span>
+                      Product Images{" "}
+                      <span className="text-gray-400">
+                        (max 10 uploads allowed)
+                      </span>
+                    </span>
+                  }
                   multiple
                   error={fieldState.error?.message}
                   disabled={loadingCreateProduct}

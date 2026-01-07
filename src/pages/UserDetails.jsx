@@ -430,14 +430,18 @@ const UserDetails = () => {
       key: "startedAt",
       label: "Started",
       render: (_, consult) => (
-        <p className="text-sm">{consult?.startedAt ? formatDateTime(consult?.startedAt) : "--"}</p>
+        <p className="text-sm">
+          {consult?.startedAt ? formatDateTime(consult?.startedAt) : "--"}
+        </p>
       ),
     },
     {
       key: "endedAt",
       label: "Ended",
       render: (_, consult) => (
-        <p className="text-sm">{consult?.endedAt ? formatDateTime(consult?.endedAt) : "--"}</p>
+        <p className="text-sm">
+          {consult?.endedAt ? formatDateTime(consult?.endedAt) : "--"}
+        </p>
       ),
     },
     {
@@ -524,26 +528,30 @@ const UserDetails = () => {
           <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
             <p className="text-sm text-gray-600 dark:text-gray-400">Bio</p>
             <p className="font-medium text-gray-900 dark:text-white">
-              {user?.currentLocation?.placeName || "--"}
+              {user?.bio || "--"}
             </p>
           </div>
 
           <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
             <p className="text-sm text-gray-600 dark:text-gray-400">Location</p>
             <p className="font-medium text-gray-900 dark:text-white">
-              {user?.bio || "--"}
+              {user?.currentLocation?.placeName || "--"}
             </p>
           </div>
         </div>
 
         {/* User Info Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-          <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
-            <p className="text-sm text-gray-600 dark:text-gray-400">Username</p>
-            <p className="font-medium text-gray-900 dark:text-white">
-              @{user?.username || "--"}
-            </p>
-          </div>
+          {userDetail?.user?.role === " patient" && (
+            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Username
+              </p>
+              <p className="font-medium text-gray-900 dark:text-white">
+                @{user?.username || "--"}
+              </p>
+            </div>
+          )}
           <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
             <p className="text-sm text-gray-600 dark:text-gray-400">Gender</p>
             <p className="font-medium text-gray-900 dark:text-white">
@@ -676,7 +684,8 @@ const UserDetails = () => {
                   Symptom Questionnaire Report
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Submitted on {formatDate(questionsData?.createdAt)}
+                  Submitted on {formatDate(questionsData?.createdAt)} (Last
+                  submitted Report)
                 </p>
               </div>
 
@@ -698,10 +707,15 @@ const UserDetails = () => {
                         </div>
                       </div>
                       <Badge
-                        variant={item.answer?.toLowerCase() === "yes" ? "success" : "danger"}
+                        variant={
+                          item.answer?.toLowerCase() === "yes"
+                            ? "success"
+                            : "danger"
+                        }
                         className="flex-shrink-0"
                       >
-                        {item.answer?.charAt(0)?.toUpperCase() + item.answer?.slice(1)}
+                        {item.answer?.charAt(0)?.toUpperCase() +
+                          item.answer?.slice(1)}
                       </Badge>
                     </div>
                   </div>
@@ -714,15 +728,24 @@ const UserDetails = () => {
                 </h3>
                 <div className="space-y-2 text-sm text-blue-800 dark:text-blue-200">
                   <p>
-                    <span className="font-medium">Total Questions:</span> {questionsData.questions.length}
+                    <span className="font-medium">Total Questions:</span>{" "}
+                    {questionsData.questions.length}
                   </p>
                   <p>
                     <span className="font-medium">Yes Responses:</span>{" "}
-                    {questionsData.questions.filter((q) => q.answer?.toLowerCase() === "yes").length}
+                    {
+                      questionsData.questions.filter(
+                        (q) => q.answer?.toLowerCase() === "yes"
+                      ).length
+                    }
                   </p>
                   <p>
                     <span className="font-medium">No Responses:</span>{" "}
-                    {questionsData.questions.filter((q) => q.answer?.toLowerCase() === "no").length}
+                    {
+                      questionsData.questions.filter(
+                        (q) => q.answer?.toLowerCase() === "no"
+                      ).length
+                    }
                   </p>
                 </div>
               </div>

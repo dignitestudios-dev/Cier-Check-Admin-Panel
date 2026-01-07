@@ -104,10 +104,7 @@ const Notifications = () => {
             onClick={() => handleDelete(notification)}
             icon={
               deletingId === notification._id ? (
-                <svg
-                  className="w-4 h-4 animate-spin"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24">
                   <circle
                     cx="12"
                     cy="12"
@@ -176,7 +173,7 @@ const Notifications = () => {
   };
 
   // Calculate stats from API response
-  const totalCount = pagination?.total ?? (notifications?.length ?? 0);
+  const totalCount = pagination?.total ?? notifications?.length ?? 0;
   const totalPages = pagination?.totalPages ?? Math.ceil(totalCount / pageSize);
 
   return (
@@ -229,6 +226,7 @@ const Notifications = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <Input
             label="Title"
+            maxlength={30}
             {...register("title", { required: "Title is required" })}
             error={errors.title?.message}
             placeholder="Enter notification title"
@@ -237,6 +235,7 @@ const Notifications = () => {
 
           <TextArea
             label="Message"
+            maxlength={280}
             {...register("message", { required: "Message is required" })}
             rows={4}
             placeholder="Enter notification message"
@@ -313,7 +312,11 @@ const Notifications = () => {
         <div className="space-y-4">
           <p className="text-gray-700 dark:text-gray-300">
             Are you sure you want to delete
-            <span className="font-semibold"> "{notificationToDelete?.title}"</span>?
+            <span className="font-semibold">
+              {" "}
+              "{notificationToDelete?.title}"
+            </span>
+            ?
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400">
             This action cannot be undone.
